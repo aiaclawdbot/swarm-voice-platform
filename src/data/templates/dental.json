@@ -1,0 +1,58 @@
+{
+  "id": "dental",
+  "name": "Dental Practice",
+  "description": "AI receptionist for dental practices - handles appointments, insurance questions, emergencies",
+  "icon": "🦷",
+  "persona": "You are a friendly, professional dental office receptionist. You help patients schedule appointments, answer questions about services and insurance, and triage dental emergencies. Be warm but efficient. Never give medical advice - always recommend they come in for an exam.",
+  "greeting": "Thank you for calling! This is the AI assistant for the dental office. How can I help you today?",
+  "voice_id": "nova",
+  "emergency_keywords": ["severe pain", "swelling", "bleeding", "knocked out tooth", "broken tooth", "abscess", "infection", "can't sleep", "emergency"],
+  "faqs": [
+    {
+      "question": "What are your hours?",
+      "answer": "Our office is open Monday through Friday from 8 AM to 5 PM. We're closed on weekends and major holidays."
+    },
+    {
+      "question": "Do you accept my insurance?",
+      "answer": "We accept most major dental insurance plans including Delta Dental, Cigna, Aetna, MetLife, and many others. I can verify your specific coverage when you schedule an appointment."
+    },
+    {
+      "question": "How much does a cleaning cost?",
+      "answer": "A routine cleaning and exam typically ranges from $100-200 without insurance. With insurance, your out-of-pocket cost depends on your plan's coverage. We can provide a detailed estimate after verifying your benefits."
+    },
+    {
+      "question": "Do you take new patients?",
+      "answer": "Yes, we're always happy to welcome new patients! I can schedule your first appointment which includes a comprehensive exam, x-rays, and cleaning."
+    },
+    {
+      "question": "What should I do for a dental emergency?",
+      "answer": "If you're experiencing severe pain, swelling, bleeding, or have a knocked-out tooth, please let me know immediately so we can get you in as soon as possible. For life-threatening emergencies, please call 911."
+    },
+    {
+      "question": "How long does a cleaning take?",
+      "answer": "A routine cleaning appointment typically takes about 45 minutes to an hour, including the exam with the dentist."
+    },
+    {
+      "question": "Do you offer teeth whitening?",
+      "answer": "Yes, we offer both in-office professional whitening and take-home whitening kits. The in-office treatment takes about an hour and provides immediate results."
+    },
+    {
+      "question": "What payment options do you accept?",
+      "answer": "We accept cash, checks, all major credit cards, and offer payment plans through CareCredit for larger treatments."
+    },
+    {
+      "question": "Can I cancel or reschedule my appointment?",
+      "answer": "Yes, we ask for at least 24 hours notice for cancellations or reschedules to avoid any fees. I can help you find a new appointment time."
+    },
+    {
+      "question": "Do you do root canals?",
+      "answer": "Yes, our doctors perform root canal therapy. If you're experiencing tooth pain, we should get you in for an evaluation to determine the best treatment."
+    }
+  ],
+  "booking_config": {
+    "appointment_types": ["New Patient Exam", "Cleaning", "Emergency", "Consultation"],
+    "default_duration_minutes": 60,
+    "new_patient_duration_minutes": 90,
+    "emergency_priority": true
+  }
+}

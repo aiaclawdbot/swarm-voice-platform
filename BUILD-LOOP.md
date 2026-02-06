@@ -1,82 +1,97 @@
-# SWARM Voice Platform — 3-Hour Build Sprint
+# SWARM Voice Platform — 3-Hour Build Loop
 
-**Start:** 2026-02-06 04:40 GMT+1
-**End:** 2026-02-06 07:40 GMT+1
+**Started:** 2026-02-06 05:13 GMT+1
+**End Time:** 2026-02-06 08:13 GMT+1
+**Status:** ACTIVE
 
-## Review Agents
+---
+
+## Agent Roster
 
 | Agent | Role | Focus |
 |-------|------|-------|
-| CPO | Chief Product Officer | Product-market fit, pricing, positioning, competitive moat |
-| Architect | Chief Architect | Tech stack, scalability, security, integration patterns |
-| PM | Product Manager | Feature prioritization, UX flows, usability, edge cases |
+| **CPO** | Chief Product Officer | Product-market fit, positioning, value prop |
+| **ARCHITECT** | Chief Architect | System design, scalability, tech stack |
+| **PM** | Product Manager | Features, UX, user stories, acceptance criteria |
+| **ENGINEER** | Senior Engineer | Implementation, code quality, deployment |
+
+---
+
+## Loop Structure
+
+```
+LOOP:
+  1. CPO Review → Product recommendations
+  2. Architect Review → Technical recommendations
+  3. PM Review → Feature/UX recommendations
+  4. Engineer Build → Implement highest priority items
+  5. Deploy → Push to production
+  6. Update state → Next iteration
+  REPEAT until end time
+```
+
+---
+
+## Current Iteration
+
+### Iteration 1
+**Started:** 05:13
+**Focus:** Foundation + First Working Feature
+
+**CPO Tasks:**
+- [ ] Review PRD-v3 product positioning
+- [ ] Identify MVP cut (what ships first)
+- [ ] Define "wow moment" for first user
+
+**Architect Tasks:**
+- [ ] Validate tech stack choices
+- [ ] Review schema-v2.sql
+- [ ] Define API contract for Vapi integration
+
+**PM Tasks:**
+- [ ] Prioritize feature list for 3-hour sprint
+- [ ] Define acceptance criteria for MVP
+- [ ] Identify UX friction points in wizard
+
+**Engineer Tasks:**
+- [ ] Apply schema to Supabase
+- [ ] Set up auth flow
+- [ ] Build first API routes
+- [ ] Deploy to Vercel
+
+---
 
 ## Build Queue
 
-### Phase 1: Foundation (Hour 1)
-- [ ] Apply Supabase schema
-- [ ] Basic API routes (agents, contacts, calls)
-- [ ] Vapi integration (assistant creation)
-- [ ] Webhook handler for call events
+| Priority | Task | Owner | Status | Notes |
+|----------|------|-------|--------|-------|
+| P0 | Apply schema-v2.sql | ENGINEER | pending | |
+| P0 | Supabase Auth setup | ENGINEER | pending | |
+| P0 | Agent CRUD API | ENGINEER | pending | |
+| P0 | Vapi webhook handler | ENGINEER | pending | |
+| P1 | Onboarding wizard | ENGINEER | pending | |
+| P1 | Contact auto-create | ENGINEER | pending | |
 
-### Phase 2: Core (Hour 2)
-- [ ] Agent creation flow (connect to Vapi)
-- [ ] Phone number provisioning (Twilio)
-- [ ] Contact auto-creation from calls
-- [ ] Call logging with transcripts
+---
 
-### Phase 3: Automation (Hour 3)
-- [ ] Workflow execution engine
-- [ ] SMS follow-up actions
-- [ ] Knowledge base upload + RAG
-- [ ] Dashboard with real data
+## Completed
 
-## Progress Log
+| Time | What | Result |
+|------|------|--------|
+| 05:04 | PRD-v3 created | 24KB, 56 tasks |
 
-| Time | Action | Status |
-|------|--------|--------|
-| 04:40 | Sprint started | ✅ |
-| 04:42 | Review agents spawned (CPO, Architect, PM) | ✅ |
-| 04:43 | Supabase client + types created | ✅ |
-| 04:43 | Vapi client library created | ✅ |
-| 04:44 | Twilio client library created | ✅ |
-| 04:44 | Agents API (CRUD) created | ✅ |
-| 04:45 | Vapi webhook handler with idempotency | ✅ |
-| 04:45 | Reviews completed - all 3 agents done | ✅ |
-| 04:46 | RLS policies + indexes migration | ✅ |
-| 04:46 | Test call endpoint created | ✅ |
-| 04:46 | Dental template with starter KB | ✅ |
-| 04:47 | Template application API | ✅ |
-| 04:47 | Dashboard analytics API | ✅ |
-| 04:47 | Contacts API (CRUD + activity) | ✅ |
-| 04:47 | Workflow execution engine | ✅ |
-| 04:47 | Cron endpoint for workflow processing | ✅ |
-
-**Stats:** 56+ TS files, ~6,000+ lines of code
-
-### Hour 1 Progress (04:40-04:55)
-- ✅ Complete API layer (agents, contacts, calls, workflows, phone numbers)
-- ✅ Vapi integration with webhook handler + idempotency
-- ✅ Twilio integration with SMS opt-out compliance
-- ✅ RLS policies and performance indexes
-- ✅ Dental template with pre-populated knowledge base
-- ✅ API client with typed methods
-- ✅ React hooks for data fetching
-- ✅ Dashboard with live data
-- ✅ Agents list with real data
-- ✅ Agent detail page with test call
-
-## Review Feedback
-
-### CPO Feedback
-(pending)
-
-### Architect Feedback
-(pending)
-
-### PM Feedback
-(pending)
+---
 
 ## Decisions Made
 
-(log key decisions here)
+| Time | Decision | Rationale |
+|------|----------|-----------|
+| | | |
+
+---
+
+## Blockers
+
+| Issue | Owner | Status |
+|-------|-------|--------|
+| | | |

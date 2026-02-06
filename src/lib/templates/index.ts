@@ -1,11 +1,15 @@
 /**
  * Agent Templates
  * 
- * CPO Review Decision: Focus on dental first, expand later
- * Only dental template is fully featured for MVP
+ * Industry-specific voice agent templates with pre-built
+ * personas, knowledge bases, and workflows.
  */
 
-import { DENTAL_TEMPLATE, applyDentalTemplate, DentalTemplate } from './dental'
+import { DENTAL_TEMPLATE, applyDentalTemplate, type DentalTemplate } from './dental'
+import { PLUMBING_TEMPLATE, applyPlumbingTemplate } from './plumbing'
+import { HVAC_TEMPLATE, applyHvacTemplate } from './hvac'
+import { MEDSPA_TEMPLATE, applyMedspaTemplate } from './medspa'
+import { LEGAL_TEMPLATE, applyLegalTemplate } from './legal'
 
 export interface AgentTemplate {
   id: string
@@ -30,60 +34,62 @@ export interface AgentTemplate {
   status: 'active' | 'coming_soon'
 }
 
-// Active templates
+// All templates
 export const TEMPLATES: Record<string, AgentTemplate & { status: 'active' | 'coming_soon' }> = {
   dental: {
     ...DENTAL_TEMPLATE,
     status: 'active',
   },
-  // Coming soon - minimal stubs for UI
   plumbing: {
-    id: 'plumbing',
-    name: 'Plumbing Company',
-    industry: 'Home Services',
-    description: 'AI dispatcher for plumbing companies. Handles emergency calls, service scheduling, and quote requests.',
-    persona: '',
-    greeting: '',
-    voice_id: 'onyx',
-    voice_provider: 'openai',
-    starter_knowledge: '',
-    workflows: [],
-    settings: {},
-    status: 'coming_soon',
+    ...PLUMBING_TEMPLATE,
+    status: 'active',
   },
   hvac: {
-    id: 'hvac',
-    name: 'HVAC Company',
-    industry: 'Home Services',
-    description: 'AI receptionist for HVAC companies. Handles service calls, maintenance scheduling, and emergency requests.',
-    persona: '',
-    greeting: '',
-    voice_id: 'onyx',
-    voice_provider: 'openai',
-    starter_knowledge: '',
-    workflows: [],
-    settings: {},
-    status: 'coming_soon',
-  },
-  legal: {
-    id: 'legal',
-    name: 'Law Firm',
-    industry: 'Legal Services',
-    description: 'AI intake specialist for law firms. Handles initial consultations, appointment scheduling, and case screening.',
-    persona: '',
-    greeting: '',
-    voice_id: 'nova',
-    voice_provider: 'openai',
-    starter_knowledge: '',
-    workflows: [],
-    settings: {},
-    status: 'coming_soon',
+    ...HVAC_TEMPLATE,
+    status: 'active',
   },
   medspa: {
-    id: 'medspa',
-    name: 'Med Spa',
-    industry: 'Healthcare - Aesthetics',
-    description: 'AI concierge for medical spas. Handles appointment booking, treatment inquiries, and consultation scheduling.',
+    ...MEDSPA_TEMPLATE,
+    status: 'active',
+  },
+  legal: {
+    ...LEGAL_TEMPLATE,
+    status: 'active',
+  },
+  // Coming soon templates
+  realestate: {
+    id: 'realestate',
+    name: 'Real Estate',
+    industry: 'Real Estate',
+    description: 'AI assistant for real estate agents. Handles property inquiries, showing requests, and lead capture.',
+    persona: '',
+    greeting: '',
+    voice_id: 'alloy',
+    voice_provider: 'openai',
+    starter_knowledge: '',
+    workflows: [],
+    settings: {},
+    status: 'coming_soon',
+  },
+  autorepair: {
+    id: 'autorepair',
+    name: 'Auto Repair',
+    industry: 'Automotive',
+    description: 'AI service advisor for auto repair shops. Handles appointments, estimates, and service status.',
+    persona: '',
+    greeting: '',
+    voice_id: 'echo',
+    voice_provider: 'openai',
+    starter_knowledge: '',
+    workflows: [],
+    settings: {},
+    status: 'coming_soon',
+  },
+  insurance: {
+    id: 'insurance',
+    name: 'Insurance Agency',
+    industry: 'Financial Services',
+    description: 'AI assistant for insurance agencies. Handles quote requests, policy questions, and claims intake.',
     persona: '',
     greeting: '',
     voice_id: 'nova',
@@ -93,6 +99,16 @@ export const TEMPLATES: Record<string, AgentTemplate & { status: 'active' | 'com
     settings: {},
     status: 'coming_soon',
   },
+}
+
+// Template application functions
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const templateAppliers: Record<string, (companyName: string, customizations?: any) => any> = {
+  dental: applyDentalTemplate,
+  plumbing: applyPlumbingTemplate,
+  hvac: applyHvacTemplate,
+  medspa: applyMedspaTemplate,
+  legal: applyLegalTemplate,
 }
 
 export function getTemplate(id: string): AgentTemplate | null {
@@ -107,5 +123,31 @@ export function getAllTemplates(): Array<AgentTemplate & { status: 'active' | 'c
   return Object.values(TEMPLATES)
 }
 
-export { applyDentalTemplate }
+/**
+ * Apply a template with company-specific customizations
+ */
+export function applyTemplate(
+  templateId: string,
+  companyName: string,
+  customizations?: Partial<AgentTemplate>
+): AgentTemplate | null {
+  const applier = templateAppliers[templateId]
+  if (!applier) {
+    // For coming_soon templates, just return null
+    const template = TEMPLATES[templateId]
+    if (!template || template.status === 'coming_soon') {
+      return null
+    }
+    // Fallback: return template as-is with company name replaced
+    return {
+      ...template,
+      persona: template.persona.replace(/\{\{company_name\}\}/g, companyName),
+      greeting: template.greeting.replace(/\{\{company_name\}\}/g, companyName),
+      starter_knowledge: template.starter_knowledge.replace(/\{\{company_name\}\}/g, companyName),
+    }
+  }
+  return applier(companyName, customizations)
+}
+
+export { applyDentalTemplate, applyPlumbingTemplate, applyHvacTemplate, applyMedspaTemplate, applyLegalTemplate }
 export type { DentalTemplate }

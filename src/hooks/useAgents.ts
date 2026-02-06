@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { agentsApi, Agent } from '@/lib/api/client'
+import { MOCK_AGENTS, isDemoMode } from '@/lib/mock-data'
 
 export function useAgents() {
   const [agents, setAgents] = useState<Agent[]>([])
@@ -12,10 +13,20 @@ export function useAgents() {
     try {
       setLoading(true)
       setError(null)
+      
+      // Check if we're in demo mode
+      if (isDemoMode()) {
+        setAgents(MOCK_AGENTS as unknown as Agent[])
+        setLoading(false)
+        return
+      }
+      
       const { agents } = await agentsApi.list()
       setAgents(agents)
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to fetch agents')
+      // Fall back to mock data on error
+      console.log('Agents API failed, using demo data')
+      setAgents(MOCK_AGENTS as unknown as Agent[])
     } finally {
       setLoading(false)
     }

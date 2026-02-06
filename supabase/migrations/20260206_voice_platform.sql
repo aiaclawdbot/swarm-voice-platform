@@ -308,17 +308,3 @@ alter table workflow_actions enable row level security;
 -- ============================================
 
 -- These will be inserted per-org on signup based on industry
-
--- ============================================
--- WEBHOOK IDEMPOTENCY
--- ============================================
-
-create table webhook_events (
-  id uuid primary key default uuid_generate_v4(),
-  event_id text not null,
-  event_type text not null,
-  processed_at timestamptz default now(),
-  unique(event_id, event_type)
-);
-
-create index idx_webhook_events_lookup on webhook_events(event_id, event_type);

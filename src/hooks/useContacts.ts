@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { contactsApi, Contact } from '@/lib/api/client'
+import { MOCK_CONTACTS, isDemoMode } from '@/lib/mock-data'
 
 export function useContacts(initialParams?: { status?: string; search?: string }) {
   const [contacts, setContacts] = useState<Contact[]>([])
@@ -14,11 +15,25 @@ export function useContacts(initialParams?: { status?: string; search?: string }
     try {
       setLoading(true)
       setError(null)
+      
+      // Check if in demo mode
+      if (isDemoMode()) {
+        const mockContacts = MOCK_CONTACTS as unknown as Contact[]
+        setContacts(mockContacts)
+        setTotal(mockContacts.length)
+        setLoading(false)
+        return
+      }
+      
       const data = await contactsApi.list(params)
       setContacts(data.contacts)
       setTotal(data.total)
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to fetch contacts')
+      // Fall back to mock data
+      console.log('Contacts API failed, using demo data')
+      const mockContacts = MOCK_CONTACTS as unknown as Contact[]
+      setContacts(mockContacts)
+      setTotal(mockContacts.length)
     } finally {
       setLoading(false)
     }

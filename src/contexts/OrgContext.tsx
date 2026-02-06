@@ -12,7 +12,7 @@ interface OrgContextType {
   createOrg: (data: Parameters<typeof organizationApi.create>[0]) => Promise<Organization>
 }
 
-const OrgContext = createContext<OrgContextType | undefined>(undefined)
+export const OrgContext = createContext<OrgContextType | undefined>(undefined)
 
 export function OrgProvider({ children }: { children: ReactNode }) {
   const [organization, setOrganizationState] = useState<Organization | null>(null)

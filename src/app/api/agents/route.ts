@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin, Agent } from '@/lib/supabase/server'
 import { createAssistant } from '@/lib/vapi/client'
+import { getTemplate, templateToKnowledgeContent, getEmergencyPrompt } from '@/data/templates'
 
 // GET /api/agents - List agents for an organization
 export async function GET(request: NextRequest) {
@@ -42,16 +43,47 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json()
-    const {
+    let {
       name,
       template_id,
       persona,
       greeting,
-      voice_id = 'alloy',
+      voice_id,
       voice_provider = 'openai',
       model = 'gpt-4o-mini',
       settings = {},
+      business_name,
     } = body
+
+    // If template_id provided, use template defaults
+    let knowledgeContent: string | undefined
+    if (template_id) {
+      const template = getTemplate(template_id)
+      if (template) {
+        // Use template defaults for missing values
+        name = name || `${template.name} Agent`
+        persona = persona || template.persona
+        greeting = greeting || template.greeting
+        voice_id = voice_id || template.voice_id
+        
+        // Add emergency handling to persona if template has it
+        const emergencyPrompt = getEmergencyPrompt(template)
+        if (emergencyPrompt) {
+          persona = `${persona}\n\n${emergencyPrompt}`
+        }
+        
+        // Prepare knowledge content from template FAQs
+        knowledgeContent = templateToKnowledgeContent(template)
+        
+        // Personalize greeting with business name if provided
+        if (business_name && greeting) {
+          greeting = greeting.replace(/the (dental office|plumbing company|HVAC company|med spa|law office|insurance agency|auto repair shop)/gi, business_name)
+        }
+      }
+    }
+
+    // Set defaults
+    voice_id = voice_id || 'alloy'
 
     if (!name) {
       return NextResponse.json({ error: 'Agent name is required' }, { status: 400 })
@@ -101,6 +133,38 @@ export async function POST(request: NextRequest) {
     if (error) {
       console.error('Error creating agent:', error)
       return NextResponse.json({ error: 'Failed to create agent' }, { status: 500 })
+    }
+
+    // If we have knowledge content from template, create knowledge base
+    if (knowledgeContent && agent) {
+      try {
+        // Create knowledge base
+        const { data: kb } = await supabaseAdmin
+          .from('knowledge_bases')
+          .insert({
+            org_id: orgId,
+            agent_id: agent.id,
+            name: `${name} Knowledge Base`,
+          })
+          .select()
+          .single()
+
+        if (kb) {
+          // Add template FAQs as knowledge documents
+          // Note: Embeddings would be generated here with OpenAI
+          await supabaseAdmin
+            .from('knowledge_documents')
+            .insert({
+              knowledge_base_id: kb.id,
+              title: 'Industry FAQs',
+              content: knowledgeContent,
+              metadata: { source: 'template', template_id },
+            })
+        }
+      } catch (kbError) {
+        console.error('Failed to create knowledge base:', kbError)
+        // Non-fatal - agent still created
+      }
     }
 
     return NextResponse.json({ agent }, { status: 201 })

@@ -35,16 +35,16 @@ export default function Home() {
           </p>
           <div className="flex gap-4">
             <Link 
-              href="/ops/clients" 
+              href="/signup" 
               className="px-6 py-3 bg-emerald-600 hover:bg-emerald-500 rounded-lg font-medium transition-colors"
             >
-              Start Managing Clients
+              Get Started Free →
             </Link>
             <Link 
-              href="/ops" 
+              href="/login" 
               className="px-6 py-3 bg-zinc-800 hover:bg-zinc-700 rounded-lg font-medium transition-colors"
             >
-              View Dashboard
+              Sign In
             </Link>
           </div>
         </div>
