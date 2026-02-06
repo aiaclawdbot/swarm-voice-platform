@@ -5,6 +5,7 @@ export interface AgentTemplate {
   name: string
   industry: string
   emoji: string
+  icon: string // alias for emoji for component compatibility
   description: string
   persona: string
   greeting: string
@@ -21,6 +22,7 @@ export const AGENT_TEMPLATES: AgentTemplate[] = [
     name: 'Plumbing Pro',
     industry: 'Plumbing',
     emoji: '🔧',
+    icon: '🔧',
     description: '24/7 emergency dispatch and service scheduling',
     persona: `You are a friendly and professional AI assistant for {{company_name}}, a plumbing company.
 
@@ -67,6 +69,7 @@ If unsure about anything, offer to have a technician call them back.`,
     name: 'HVAC Assistant',
     industry: 'HVAC',
     emoji: '❄️',
+    icon: '❄️',
     description: 'Heating and cooling service with seasonal urgency handling',
     persona: `You are a helpful AI assistant for {{company_name}}, an HVAC company specializing in heating and cooling services.
 
@@ -114,6 +117,7 @@ Never quote exact prices, but you can say "a typical diagnosis fee is around $X.
     name: 'Dental Office',
     industry: 'Dental',
     emoji: '🦷',
+    icon: '🦷',
     description: 'New patient scheduling and appointment management',
     persona: `You are a warm and professional AI receptionist for {{company_name}}, a dental practice.
 
@@ -167,6 +171,7 @@ If they describe symptoms, validate their concern and get them scheduled.`,
     name: 'Med Spa Concierge',
     industry: 'Med Spa',
     emoji: '💆',
+    icon: '💆',
     description: 'Luxury consultation booking and treatment inquiries',
     persona: `You are an elegant and knowledgeable AI concierge for {{company_name}}, a premier medical spa.
 
@@ -219,6 +224,7 @@ Emphasize the personalized, luxury experience they'll receive.`,
     name: 'Law Firm Intake',
     industry: 'Legal',
     emoji: '⚖️',
+    icon: '⚖️',
     description: 'Case intake qualification and consultation scheduling',
     persona: `You are a professional and empathetic AI intake specialist for {{company_name}}, a law firm.
 
@@ -270,6 +276,7 @@ Collect: name, phone, email, brief description of matter, when it occurred, any 
     name: 'Real Estate Agent',
     industry: 'Real Estate',
     emoji: '🏠',
+    icon: '🏠',
     description: 'Lead qualification and showing scheduling',
     persona: `You are an enthusiastic and knowledgeable AI assistant for {{company_name}}, a real estate professional/team.
 
@@ -325,6 +332,7 @@ Capture as much qualifying information as possible.`,
     name: 'Auto Shop',
     industry: 'Auto Repair',
     emoji: '🚗',
+    icon: '🚗',
     description: 'Service scheduling and repair status updates',
     persona: `You are a helpful AI service advisor for {{company_name}}, an auto repair shop.
 
@@ -385,6 +393,7 @@ Always capture the vehicle info for proper scheduling.`,
     name: 'Insurance Agency',
     industry: 'Insurance',
     emoji: '🛡️',
+    icon: '🛡️',
     description: 'Quote intake and policy service',
     persona: `You are a professional AI assistant for {{company_name}}, an insurance agency.
 

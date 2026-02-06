@@ -1,11 +1,11 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { AGENT_TEMPLATES, getTemplate, type AgentTemplate } from '@/lib/templates'
 
-export default function NewAgentPage() {
+function NewAgentContent() {
   const searchParams = useSearchParams()
   const templateParam = searchParams.get('template')
   
@@ -470,5 +470,15 @@ export default function NewAgentPage() {
         </div>
       )}
     </div>
+  )
+}
+
+export default function NewAgentPage() {
+  return (
+    <Suspense fallback={
+      <div style={{ padding: '32px', color: '#666' }}>Loading...</div>
+    }>
+      <NewAgentContent />
+    </Suspense>
   )
 }
