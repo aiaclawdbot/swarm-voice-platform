@@ -209,6 +209,7 @@ export interface Call {
   duration_seconds: number
   status?: string
   intent?: string
+  sentiment?: string
   summary?: string
   transcript?: string
   recording_url?: string
@@ -227,6 +228,8 @@ export const callsApi = {
     const query = searchParams.toString()
     return apiFetch<{ calls: Call[]; total: number }>(`/calls${query ? `?${query}` : ''}`)
   },
+  
+  get: (id: string) => apiFetch<{ call: Call }>(`/calls/${id}`),
 }
 
 // ============================================

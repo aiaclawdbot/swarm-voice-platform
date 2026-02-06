@@ -220,6 +220,22 @@ export default function CallsPage() {
 
                 {/* Actions */}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', flexShrink: 0 }}>
+                  <Link
+                    href={`/dashboard/calls/${call.id}`}
+                    style={{
+                      padding: '6px 12px',
+                      backgroundColor: '#00ff88',
+                      border: 'none',
+                      borderRadius: '4px',
+                      color: '#000',
+                      fontSize: '12px',
+                      textDecoration: 'none',
+                      textAlign: 'center',
+                      fontWeight: '600',
+                    }}
+                  >
+                    View Details
+                  </Link>
                   {call.recording_url && (
                     <a
                       href={call.recording_url}
@@ -238,23 +254,6 @@ export default function CallsPage() {
                     >
                       🎧 Listen
                     </a>
-                  )}
-                  {call.contact?.id && (
-                    <Link
-                      href={`/dashboard/contacts/${call.contact.id}`}
-                      style={{
-                        padding: '6px 12px',
-                        backgroundColor: '#1a1a1a',
-                        border: '1px solid #333',
-                        borderRadius: '4px',
-                        color: '#fff',
-                        fontSize: '12px',
-                        textDecoration: 'none',
-                        textAlign: 'center',
-                      }}
-                    >
-                      View Contact
-                    </Link>
                   )}
                 </div>
               </div>
