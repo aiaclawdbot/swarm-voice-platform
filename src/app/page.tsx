@@ -1,65 +1,171 @@
-import Image from "next/image";
+import Link from 'next/link'
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <div className="min-h-screen bg-black text-white">
+      {/* Header */}
+      <header className="border-b border-zinc-800">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+          <div className="text-xl font-bold">
+            SWARM <span className="text-emerald-500">Voice</span>
+          </div>
+          <div className="flex items-center gap-4">
+            <Link 
+              href="/ops" 
+              className="px-4 py-2 bg-zinc-800 hover:bg-zinc-700 rounded-lg text-sm transition-colors"
+            >
+              Ops Dashboard →
+            </Link>
+          </div>
+        </div>
+      </header>
+
+      {/* Hero */}
+      <section className="max-w-7xl mx-auto px-6 py-24">
+        <div className="max-w-3xl">
+          <div className="text-emerald-500 text-sm font-medium mb-4">AI VOICE PLATFORM</div>
+          <h1 className="text-5xl font-bold leading-tight mb-6">
+            Never miss another call.
+            <br />
+            <span className="text-zinc-500">Let AI handle it.</span>
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="text-xl text-zinc-400 mb-8">
+            Deploy AI voice agents that answer calls 24/7, capture leads, book appointments, 
+            and notify your team instantly. No more voicemail. No more missed opportunities.
           </p>
+          <div className="flex gap-4">
+            <Link 
+              href="/ops/clients" 
+              className="px-6 py-3 bg-emerald-600 hover:bg-emerald-500 rounded-lg font-medium transition-colors"
+            >
+              Start Managing Clients
+            </Link>
+            <Link 
+              href="/ops" 
+              className="px-6 py-3 bg-zinc-800 hover:bg-zinc-700 rounded-lg font-medium transition-colors"
+            >
+              View Dashboard
+            </Link>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* Stats */}
+      <section className="border-y border-zinc-800 bg-zinc-900/50">
+        <div className="max-w-7xl mx-auto px-6 py-16">
+          <div className="grid grid-cols-4 gap-8 text-center">
+            <div>
+              <div className="text-4xl font-bold text-emerald-500">78%</div>
+              <div className="text-zinc-400 mt-2">Choose first responder</div>
+            </div>
+            <div>
+              <div className="text-4xl font-bold text-emerald-500">67%</div>
+              <div className="text-zinc-400 mt-2">Won&apos;t leave voicemail</div>
+            </div>
+            <div>
+              <div className="text-4xl font-bold text-emerald-500">21x</div>
+              <div className="text-zinc-400 mt-2">Conversion within 5 min</div>
+            </div>
+            <div>
+              <div className="text-4xl font-bold text-emerald-500">35%</div>
+              <div className="text-zinc-400 mt-2">Calls after 6pm</div>
+            </div>
+          </div>
         </div>
-      </main>
+      </section>
+
+      {/* Features */}
+      <section className="max-w-7xl mx-auto px-6 py-24">
+        <h2 className="text-3xl font-bold mb-12">Platform Capabilities</h2>
+        <div className="grid grid-cols-3 gap-6">
+          <FeatureCard 
+            icon="🎙️"
+            title="Voice Agent Engine"
+            description="Deploy AI agents with custom personas, voices, and knowledge bases. Handles inbound calls naturally."
+          />
+          <FeatureCard 
+            icon="🎯"
+            title="Lead Capture"
+            description="Automatically extract caller info, intent, and urgency. Instant SMS/email notifications to your team."
+          />
+          <FeatureCard 
+            icon="📅"
+            title="Appointment Booking"
+            description="Real-time calendar integration. AI books appointments directly without human intervention."
+          />
+          <FeatureCard 
+            icon="🧠"
+            title="Knowledge Base"
+            description="Upload docs, FAQs, pricing sheets. Your agent learns your business and answers accurately."
+          />
+          <FeatureCard 
+            icon="📊"
+            title="Analytics Dashboard"
+            description="Call volume, duration, outcomes, lead capture rates. Full visibility into performance."
+          />
+          <FeatureCard 
+            icon="🔔"
+            title="Real-time Alerts"
+            description="High-urgency leads get instant attention. Never miss an emergency call again."
+          />
+        </div>
+      </section>
+
+      {/* Industry Templates */}
+      <section className="border-t border-zinc-800 bg-zinc-900/30">
+        <div className="max-w-7xl mx-auto px-6 py-24">
+          <h2 className="text-3xl font-bold mb-4">Pre-Built Industry Templates</h2>
+          <p className="text-zinc-400 mb-12 max-w-2xl">
+            Get started in minutes with optimized agent configurations for your industry.
+          </p>
+          <div className="grid grid-cols-4 gap-4">
+            {[
+              { name: 'Plumbing', emoji: '🔧', color: 'bg-blue-500/10 border-blue-500/30' },
+              { name: 'HVAC', emoji: '❄️', color: 'bg-cyan-500/10 border-cyan-500/30' },
+              { name: 'Dental', emoji: '🦷', color: 'bg-white/10 border-white/30' },
+              { name: 'Med Spa', emoji: '💆', color: 'bg-pink-500/10 border-pink-500/30' },
+              { name: 'Legal', emoji: '⚖️', color: 'bg-amber-500/10 border-amber-500/30' },
+              { name: 'Real Estate', emoji: '🏠', color: 'bg-emerald-500/10 border-emerald-500/30' },
+              { name: 'Auto Repair', emoji: '🚗', color: 'bg-red-500/10 border-red-500/30' },
+              { name: 'Insurance', emoji: '🛡️', color: 'bg-purple-500/10 border-purple-500/30' },
+            ].map(industry => (
+              <div key={industry.name} className={`p-4 rounded-xl border ${industry.color} text-center`}>
+                <div className="text-3xl mb-2">{industry.emoji}</div>
+                <div className="font-medium">{industry.name}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="max-w-7xl mx-auto px-6 py-24 text-center">
+        <h2 className="text-3xl font-bold mb-4">Ready to deploy?</h2>
+        <p className="text-zinc-400 mb-8">Add your first client and configure their AI voice agent in minutes.</p>
+        <Link 
+          href="/ops/clients" 
+          className="inline-block px-8 py-4 bg-emerald-600 hover:bg-emerald-500 rounded-lg font-medium text-lg transition-colors"
+        >
+          Go to Ops Dashboard →
+        </Link>
+      </section>
+
+      {/* Footer */}
+      <footer className="border-t border-zinc-800 py-8">
+        <div className="max-w-7xl mx-auto px-6 text-center text-zinc-500 text-sm">
+          SWARM Voice Platform • Built for AI-first agencies
+        </div>
+      </footer>
     </div>
-  );
+  )
+}
+
+function FeatureCard({ icon, title, description }: { icon: string; title: string; description: string }) {
+  return (
+    <div className="p-6 bg-zinc-900 rounded-xl border border-zinc-800">
+      <div className="text-3xl mb-4">{icon}</div>
+      <h3 className="text-lg font-semibold mb-2">{title}</h3>
+      <p className="text-zinc-400 text-sm">{description}</p>
+    </div>
+  )
 }
