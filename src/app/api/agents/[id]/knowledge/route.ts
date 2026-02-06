@@ -124,13 +124,16 @@ export async function DELETE(
     }
 
     // Delete all documents
-    const { count } = await supabaseAdmin
+    const { error: deleteError } = await supabaseAdmin
       .from('knowledge_documents')
       .delete()
       .eq('knowledge_base_id', knowledgeBase.id)
-      .select('*', { count: 'exact', head: true })
 
-    return NextResponse.json({ success: true, deleted: count || 0 })
+    if (deleteError) {
+      console.error('Error deleting knowledge documents:', deleteError)
+    }
+
+    return NextResponse.json({ success: true })
 
   } catch (error) {
     console.error('Knowledge delete error:', error)

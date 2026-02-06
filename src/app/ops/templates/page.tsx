@@ -2,7 +2,9 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { AGENT_TEMPLATES, type AgentTemplate } from '@/lib/templates'
+import { AGENT_TEMPLATES, type LegacyAgentTemplate } from '@/lib/templates'
+
+type AgentTemplate = LegacyAgentTemplate
 
 export default function TemplatesPage() {
   const [selectedTemplate, setSelectedTemplate] = useState<AgentTemplate | null>(null)

@@ -2,7 +2,9 @@
 
 import { useState, useEffect, use } from 'react'
 import Link from 'next/link'
-import { AGENT_TEMPLATES, type AgentTemplate } from '@/lib/templates'
+import { AGENT_TEMPLATES, type LegacyAgentTemplate } from '@/lib/templates'
+
+type AgentTemplate = LegacyAgentTemplate
 
 interface Agent {
   id: string

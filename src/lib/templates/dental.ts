@@ -166,18 +166,19 @@ export function applyDentalTemplate(companyName: string, customizations?: Partia
     starter_knowledge: replace(template.starter_knowledge),
     workflows: template.workflows.map(w => ({
       ...w,
-      actions: w.actions.map(a => ({
-        ...a,
-        action_config: {
-          ...a.action_config,
-          ...(a.action_config.template && {
-            template: replace(a.action_config.template as string),
-          }),
-          ...(a.action_config.content && {
-            content: replace(a.action_config.content as string),
-          }),
-        },
-      })),
+      actions: w.actions.map(a => {
+        const config: Record<string, unknown> = { ...a.action_config }
+        if (typeof config.template === 'string') {
+          config.template = replace(config.template)
+        }
+        if (typeof config.content === 'string') {
+          config.content = replace(config.content)
+        }
+        return {
+          ...a,
+          action_config: config,
+        }
+      }),
     })),
   }
 }

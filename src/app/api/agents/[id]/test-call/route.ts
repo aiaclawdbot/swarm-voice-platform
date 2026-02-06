@@ -31,10 +31,21 @@ export async function POST(
     // Get agent with vapi_assistant_id
     const { data: agent, error: agentError } = await supabaseAdmin
       .from('agents')
-      .select('id, name, vapi_assistant_id, phone_number_id, phone_number:phone_numbers(number, vapi_phone_id)')
+      .select('id, name, vapi_assistant_id, phone_number_id')
       .eq('id', agentId)
       .eq('org_id', orgId)
       .single()
+    
+    // Get phone number separately if agent has one
+    let phoneNumber: { number: string; vapi_phone_id?: string } | null = null
+    if (agent?.phone_number_id) {
+      const { data: pn } = await supabaseAdmin
+        .from('phone_numbers')
+        .select('number, vapi_phone_id')
+        .eq('id', agent.phone_number_id)
+        .single()
+      phoneNumber = pn
+    }
 
     if (agentError || !agent) {
       return NextResponse.json({ error: 'Agent not found' }, { status: 404 })
@@ -76,8 +87,8 @@ export async function POST(
           number: phone_number,
         },
         // Use the agent's phone number if configured, otherwise Vapi default
-        ...(agent.phone_number?.vapi_phone_id && {
-          phoneNumberId: agent.phone_number.vapi_phone_id,
+        ...(phoneNumber?.vapi_phone_id && {
+          phoneNumberId: phoneNumber.vapi_phone_id,
         }),
       }),
     })
@@ -97,7 +108,7 @@ export async function POST(
       org_id: orgId,
       agent_id: agentId,
       direction: 'outbound',
-      caller_number: agent.phone_number?.number || 'vapi-default',
+      caller_number: phoneNumber?.number || 'vapi-default',
       status: 'initiated',
       vapi_call_id: vapiCall.id,
       metadata: { test_call: true },

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase/server'
 import { createAssistant } from '@/lib/vapi/client'
-import { getTemplate, applyDentalTemplate } from '@/lib/templates'
+import { TEMPLATES, applyDentalTemplate } from '@/lib/templates'
 
 /**
  * POST /api/agents/from-template
@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Get base template
-    const baseTemplate = getTemplate(template_id)
+    const baseTemplate = TEMPLATES[template_id]
     if (!baseTemplate) {
       return NextResponse.json({ error: 'Template not found' }, { status: 404 })
     }
@@ -142,7 +142,7 @@ export async function POST(request: NextRequest) {
 
       if (wf && !wfError) {
         // Add actions
-        const actionsToInsert = workflow.actions.map((action, idx) => ({
+        const actionsToInsert = workflow.actions.map((action: { action_type: string; action_config: Record<string, unknown> }, idx: number) => ({
           workflow_id: wf.id,
           action_type: action.action_type,
           action_config: action.action_config,

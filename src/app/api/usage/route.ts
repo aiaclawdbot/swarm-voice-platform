@@ -111,13 +111,14 @@ export async function GET(request: NextRequest) {
 
     // Overage calculation
     const overageMinutes = Math.max(0, usage.call_minutes - limits.minutes)
-    const overageRate = {
+    const overageRates: Record<string, number> = {
       trial: 0.15,
       starter: 0.15,
       pro: 0.12,
       business: 0.10,
       enterprise: 0.08,
-    }[org?.plan || 'trial']
+    }
+    const overageRate = overageRates[org?.plan || 'trial'] || 0.15
 
     const overageCost = Math.round(overageMinutes * (overageRate || 0.15) * 100) / 100
 
